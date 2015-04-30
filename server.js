@@ -45,37 +45,22 @@ app.get("/products", function (req, res) {
 
 app.get("/popular", function (req, res) {
 
-	var popular = [];
+	res.render("popular_products", {product : mostPop});
 
-	
-	for(key in mostPop){
-
-		popular.push({
-			name : key,
-			qty : mostPop[key]
-		});
-
-	}
-
-	  console.log(mostPop);
-	
-
-	res.render("popular_products");
-	//res.send("tomorrow");
 });
 		
 app.get("/least", function (req, res) {
 	var leastPop = [];
 
-	for(key  in leastPopularProduct){
+	for(key  in leastPop){
 
 		leastPop.push({
 			name : key,
-			qty : leastPopularProduct[key]
+			qty : leastPop[key]
 		});
 
 	}
-	res.render("leastPopular",{products : leastPop});
+	res.render("least_products",{products : leastPop});
 });
 
 app.get('/persona', function(req, res){

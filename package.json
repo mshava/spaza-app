@@ -9,6 +9,8 @@
   "author": "",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "init": "~0.1.2"
+    "init": "~0.1.2",
+    "express": "~4.12.3",
+    "express-handlebars": "~2.0.1"
   }
 }
