@@ -47,13 +47,13 @@
             //Think about creating a list of objects from the csv
                //Create a function that find the most popular product, put it in a module and write a unit test.
         this.mostPopularPdt = function(itemMap){
-                console.log(itemMap);
+                //console.log(itemMap);
                  var mostPopularProduct = {};
                  var max = 0;
                  for(var prop in itemMap) {
                      
                     var value = itemMap[prop];
-                    console.log("prop : " + value);
+                    
                     if(itemMap[prop] > max) {
                       max = itemMap[prop];
                       mostPopularProduct = {
@@ -62,7 +62,7 @@
                      };
                  }
                }
-               console.log(mostPopularProduct);
+               //console.log(mostPopularProduct);
                return mostPopularProduct;
              };
 

@@ -12,12 +12,12 @@ var group = products.groupItems(itemArr);
 
 
 var mostPop = products.mostPopularPdt(group);
-	
-console.log(mostPop);
+
+//console.log(mostPop);
 
 var leastPop = products.leastPopularPdt(group);
 
-console.log(leastPop);
+//console.log(leastPop);
 
 //console.log(leastPop);
 var app = express ();
