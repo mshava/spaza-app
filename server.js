@@ -50,17 +50,8 @@ app.get("/popular", function (req, res) {
 });
 		
 app.get("/least", function (req, res) {
-	var leastPop = [];
-
-	for(key  in leastPop){
-
-		leastPop.push({
-			name : key,
-			qty : leastPop[key]
-		});
-
-	}
-	res.render("least_products",{products : leastPop});
+	
+	res.render("least_products", {product : leastPop});
 });
 
 app.get('/persona', function(req, res){
