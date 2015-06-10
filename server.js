@@ -27,7 +27,7 @@ app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
 
-app.get('/', function(req, res){
+app.get("/", function(req, res){
 	res.render("index");
 });
 
@@ -53,6 +53,17 @@ app.get("/least", function (req, res) {
 	
 	res.render("least_products", {product : leastPop});
 });
+
+app.get("/most_category.handlebars", function (req, res) {
+	
+	res.render("/most_category.handlebars", {product : mostCat});
+});
+
+app.get("/least_category.handlebars", function (req, res) {
+	
+	res.render("/least_category.handlebars", {product : leastCap});
+});
+
 
 app.get('/persona', function(req, res){
 	res.render("persona");
