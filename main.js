@@ -24,3 +24,15 @@ var mostPop = products.mostPopularPrd(group);
 	var leastPop = products.leastPopularPrd(group);
 
 		console.log(leastPop);
+
+
+var fs = require('fs');
+
+var products = require();
+
+var groupItems = products.groupItems();
+
+
+var mostPopCat = products.mostPopularCat(category);		
+
+		console.log(mostPopCat);
