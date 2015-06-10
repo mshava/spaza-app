@@ -1,14 +1,12 @@
 var express = require('express');
 var exphbs  = require('express-handlebars');
 
-var fs = require('fs');
-
 var Products = require('./nelisa_products');
-var products = new Products();
+var products = new Products('./Nelisa Sales History.csv');
 
-var itemArr = products.productList('./Nelisa Sales History.csv');
+//var itemArr = products.productList('./Nelisa Sales History.csv');
 
-var group = products.groupItems(itemArr);
+var group = products.groupItems();
 
 
 var mostPop = products.mostPopularPdt(group);
@@ -17,8 +15,14 @@ var mostPop = products.mostPopularPdt(group);
 
 var leastPop = products.leastPopularPdt(group);
 
-//console.log(leastPop);
+//var groupItems = products.groupItems();
 
+
+var category = products.groupCat(group);
+
+var mostPopCat = products.mostPopularCat(category);
+//console.log(leastPop);
+var leastPopCat = products.leastPopularCat(category);
 //console.log(leastPop);
 var app = express ();
   // create a route
@@ -34,10 +38,10 @@ app.get('/', function(req, res){
 app.get("/products", function (req, res) {
 	var productList = [];
 
-	for (key in itemMap){
+	for (key in group){
 		productList.push({
 			name:key,
-			qty:itemMap[key]
+			qty:group[key]
 		});
 	}
 	res.render("products", {products :productList});
@@ -53,6 +57,47 @@ app.get("/least", function (req, res) {
 	
 	res.render("least_products", {product : leastPop});
 });
+
+		
+app.get("/popular_category", function (req, res) {
+	var popCat = [];
+
+	for (key in mostPopCat){
+		popCat.push({
+			name:key,
+			qty:mostPopCat[key]
+		});
+	}
+	
+	res.render("popular_category", {products : popCat});
+});
+
+app.get("/least_category", function (req, res) {
+	var popCat = [];
+
+	for (key in leastPopCat){
+		popCat.push({
+			name:key,
+			qty:leastPopCat[key]
+		});
+	}
+	
+	res.render("least_category", {products : popCat});
+});
+
+app.get("/category", function (req, res) {
+	var popCat = [];
+
+	for (key in category){
+		popCat.push({
+			name:key,
+			qty:category[key]
+		});
+	}
+	
+	res.render("category", {products : popCat});
+});
+
 
 app.get('/persona', function(req, res){
 	res.render("persona");

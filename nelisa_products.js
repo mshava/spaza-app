@@ -1,13 +1,15 @@
-    var fs = require('fs');
+       var fs = require('fs');
 
-    module.exports = function(){
+    module.exports = function(filePath){
 
-      this.productList = function(filePath){
+
+
+      this.productList = function(callback){
 
         var linesInFile = fs.readFileSync(filePath, "utf8");
 
         var rows = linesInFile.split('\r');
-          //console.log(rows.length);
+          //console.log(">>>>>>>>>"+rows);
 
           var listOfProducts = [];
           
@@ -18,30 +20,40 @@
 
             var salesObj = {
               itemName : columns[2],
-              soldItem: Number(columns[3])
+              soldItem: Number(numberSold)
             };
             listOfProducts.push(salesObj);
           });
-
-          return listOfProducts;
+          //console.log(">>>>>>>>>"+listOfProducts);
+          callback(null, listOfProducts);
         }
 
-        this.groupItems = function(products) {
-          var itemMap = {};
+        this.groupItems = function() {
+          var linesInFile = fs.readFileSync(filePath, "utf8");
 
-          products.forEach(function(products) {
-            var currentItem = products.itemName;
-            var numberSold = products.soldItem;
+        var rows = linesInFile.split('\r');
+        var itemMap = {};
+          //console.log(">>>>>>>>>"+rows);
+
+         // console.log("-------->"+rows);
+
+          
+
+          rows.forEach(function(products) {
+            var split = products.split(';');
+            var currentItem = split[2];
+            var numberSold = split[3];
 
             if(itemMap[currentItem] === undefined){
               itemMap[currentItem] = 0;
             }
 
-            itemMap[currentItem] = itemMap[currentItem] + Number(numberSold);
+            itemMap[currentItem] += Number(numberSold);
 
           });
+          console.log("______________________________________________" + itemMap);
           return itemMap;
-
+            
         };
 
             //Think about creating a list of objects from the csv
@@ -62,7 +74,7 @@
                      };
                  }
                }
-               //console.log(mostPopularProduct);
+               console.log(mostPopularProduct);
                return mostPopularProduct;
              };
 
@@ -79,12 +91,12 @@
                  }
                }
              }
-               //console.log(itemMap);
+               console.log(leastPopularProduct);
                return leastPopularProduct;
              };
 
-             this.groupCat = function(categories) {
-
+             this.groupCat = function(itemMap) {
+              
               var productCategories = {
                 'Milk 1l': 'Dairy Products',
                 'Imasi': 'Dairy Products',
@@ -107,6 +119,16 @@
               }
               var catMap = {};
 
+
+              for(var key in itemMap){
+                if(catMap[productCategories[key]] === undefined){
+                  catMap[productCategories[key]] = 0;
+                }
+                catMap[productCategories[key]] += itemMap[key];
+              }
+              console.log(catMap);
+              return catMap;
+              /* 
               categories.forEach(function(categories) {
           //get the category for the current product!!!!!!
           var category = categories.itemName;
@@ -121,10 +143,11 @@
           catMap[category] = catMap[category] + Number(prodQty); 
         });
 
-        //console.log(catMap);
-        return catMap
+        console.log("-------------------kjjb,,."+catMap);
+        return catMap;
       };
-
+*/
+};
       this.mostPopularCat = function(catMap){
         var mostPopularCategory = {};
         var max = 0;
@@ -139,7 +162,7 @@
             }
           }
         }
-        //console.log(mostPopularCategory)
+        console.log(mostPopularCategory)
         return mostPopularCategory;
       }; 
 
@@ -148,15 +171,19 @@
        var min = 328;
        for(var prop in catMap) {
          var value = catMap[prop];
-         if(catMap[prop] < min) {
-          min = catMap[prop];
+         if(value < min) {
+          min = value;
           leastPopularCategory = {
            name : prop,
            amt  : min
          }
        }
      }
-            // console.log(leastPopularCategory);
+             console.log(leastPopularCategory);
             return leastPopularCategory;
           };
-        };
+
+};
+
+
+
